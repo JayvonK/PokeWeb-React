@@ -30,9 +30,13 @@ interface ITypesObject {
 }
 
 interface ISpritesObject {
-  front_default: string;
-  front_shiny: string;
-  version: {
+  other: {
+    "official-artwork": {
+      front_default: string;
+      front_shiny: string;
+    }
+  }
+  versions: {
     "generation-v": {
       "black-white": {
         animated: {
