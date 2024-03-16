@@ -1,12 +1,14 @@
-interface IPokemonData {
+export interface IPokemonData {
   abilities: IAbilityObject[];
+  id: number;
   location_area_encounters_URL: string;
   moves: IMovesObject[];
   species: {
     name: string;
+    url: string;
   };
   sprites: ISpritesObject;
-  types: ITypesObject[]
+  types: ITypesObject[];
 }
 
 interface IAbilityObject {
@@ -41,4 +43,3 @@ interface ISpritesObject {
   };
 }
 
-export {};
