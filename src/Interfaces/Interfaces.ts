@@ -6,6 +6,7 @@ interface IPokemonData {
     name: string;
   };
   sprites: ISpritesObject;
+  types: ITypesObject[]
 }
 
 interface IAbilityObject {
