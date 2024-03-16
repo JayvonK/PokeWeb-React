@@ -1,4 +1,4 @@
-export interface IPokemonData {
+export type IPokemonData = {
   abilities: IAbilityObject[];
   id: number;
   location_area_encounters_URL: string;

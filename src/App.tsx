@@ -1,14 +1,38 @@
 'use client';
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
-import { Button, Modal } from 'flowbite-react';
+import { Modal } from 'flowbite-react';
 import { useState } from 'react';
+import { GetPokemonData } from './Data/DataService';
+import { IPokemonData } from './Interfaces/Interfaces';
 
 function App() {
-  const [openModal, setOpenModal] = useState(false);
+  const [count, setCount] = useState<number>(3)
+  const [openModal, setOpenModal] = useState<boolean>(false);
+  const [pokeData, setPokeData] = useState<IPokemonData>();
+  const [searchName, setSearchName] = useState<string | number>(2);
+  const [moveArray, setMoveArray] = useState<string[]>([""]);
+
+  const handleCount = () => {
+    setCount(count + 1);
+  }
+
+  const handleChange = (value: string | number) => {
+    setSearchName(value);
+  }
+
+  useEffect(() => {
+    const InitPokeFetch = async (value: string | number) =>{
+      setPokeData(await GetPokemonData(value))
+    }
+    console.log("hi");
+
+    InitPokeFetch(searchName);
+  }, [count])
 
   return (
     <>
+    
       <button onClick={() => setOpenModal(true)}>Toggle modal</button>
       <Modal show={openModal} onClose={() => setOpenModal(false)}>
         <Modal.Header>Terms of Service</Modal.Header>
@@ -32,6 +56,21 @@ function App() {
           </button>
         </Modal.Footer>
       </Modal>
+      <input type='text' onChange={(e) => handleChange(e.target.value)} />
+      <button type='button' onClick={handleCount}>Search</button>
+      <h1>Abilities:{
+        pokeData?.abilities.map(ab => (
+          <p>{ab.ability.name}</p>
+        ))
+        }
+      </h1>
+      <h1>Moves:{
+        pokeData?.moves.map(m => {
+          // setMoveArray([...moveArray, m.move.name])
+          return m.move.name + " | "
+        })
+        }
+      </h1>
     </>
   );
 }
