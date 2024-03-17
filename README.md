@@ -1,3 +1,16 @@
+<!-- Jayvon Khuth -->
+<!-- 3/17/24 -->
+<!-- Pokemon API React Rebuild -->
+<!-- For this project I used react, typescript, tailwind, and flowbite to try my best to recreate my last pokeweb project. I couldn't get many things to work for example, local storage, my evolutions to render on initial load, and all the other minor functionalities that I have on my past website. But I was able to get majority of the website to look alike. I used lots of api chaining and hooks to access and display all of my info. -->
+
+<!-- Peer Reviewed By:  -->
+<!-- Peer Review: -->
+
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
