@@ -3,15 +3,15 @@ import React, { useEffect } from "react";
 import "./App.css";
 import { Modal } from "flowbite-react";
 import { useState } from "react";
-import { GetPokemonData } from "./Data/DataService";
-import { IPokemonData } from "./Interfaces/Interfaces";
+import { GetPokemonData, GetPokemonLocationData } from "./Data/DataService";
+import { IPokemonData, PokeLocationData } from "./Interfaces/Interfaces";
 
 function App() {
   const [count, setCount] = useState<number>(3);
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [pokeData, setPokeData] = useState<IPokemonData>();
-  const [searchName, setSearchName] = useState<string | number>(2);
-  const [moveArray, setMoveArray] = useState<string[]>([""]);
+  const [pokeLocationData, setPokeLocationData] = useState<PokeLocationData>();
+  const [searchName, setSearchName] = useState<string | number>("1");
 
   const handleCount = () => {
     setCount(count + 1);
@@ -30,9 +30,8 @@ function App() {
   useEffect(() => {
     const InitPokeFetch = async (value: string | number) => {
       setPokeData(await GetPokemonData(value));
+      setPokeLocationData(await GetPokemonLocationData(value));
     };
-    console.log("hi");
-
     InitPokeFetch(searchName);
   }, [count]);
 
@@ -74,33 +73,26 @@ function App() {
       </button>
       <h1>ID: {pokeData && pokeData.id}</h1>
       <h1>Name: {pokeData && pokeData.species.name}</h1>
+      <h1>Type: {pokeData && pokeData.types.map((t) => t.type.name + " ")}</h1>
+      <h1>Location: {pokeLocationData && pokeLocationData.names[0].name}</h1>
       <h1>
-        Abilities:
-        {pokeData && pokeData.abilities.map((ab) => <p>{ab.ability.name}</p>)}
+        Abilities:{" "}
+        {pokeData && pokeData.abilities.map((ab) => ab.ability.name + " | ")}
       </h1>
       <h1>
-        Moves:
-        {pokeData &&
-          pokeData.moves.map((m) => {
-            // setMoveArray([...moveArray, m.move.name])
-            return m.move.name + " | ";
-          })}
+        Moves: {pokeData && pokeData.moves.map((m) => m.move.name + " | ")}
       </h1>
       <img
         src={
           pokeData && pokeData.sprites.other["official-artwork"].front_default
         }
-      ></img>
+      />
       <img
         src={pokeData && pokeData.sprites.other["official-artwork"].front_shiny}
-      ></img>
+      />
       <img
-        src={
-          pokeData &&
-          pokeData.sprites.versions["generation-v"]["black-white"].animated
-            .front_default
-        }
-      ></img>
+        src={pokeData && pokeData.sprites.versions["generation-v"]["black-white"].animated.front_default}
+      />
     </div>
   );
 }

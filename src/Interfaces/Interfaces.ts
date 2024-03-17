@@ -1,7 +1,6 @@
-export type IPokemonData = {
+export interface IPokemonData {
   abilities: IAbilityObject[];
   id: number;
-  location_area_encounters_URL: string;
   moves: IMovesObject[];
   species: {
     name: string;
@@ -10,6 +9,30 @@ export type IPokemonData = {
   sprites: ISpritesObject;
   types: ITypesObject[];
 }
+
+export type PokeEncountersURL = PokeEncountersObject[];
+
+export type PokeLocationData = PokeLocationObject;
+
+type PokeLocationObject = {
+  location: {
+    name: string
+  };
+  names: NamesObject[];
+};
+
+type NamesObject = {
+  language: {
+    name: string;
+  };
+  name: string;
+};
+
+type PokeEncountersObject = {
+  'location_area': {
+    url: string;
+  };
+};
 
 interface IAbilityObject {
   ability: {
@@ -34,8 +57,8 @@ interface ISpritesObject {
     "official-artwork": {
       front_default: string;
       front_shiny: string;
-    }
-  }
+    };
+  };
   versions: {
     "generation-v": {
       "black-white": {
@@ -46,4 +69,3 @@ interface ISpritesObject {
     };
   };
 }
-
