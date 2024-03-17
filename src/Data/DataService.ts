@@ -4,7 +4,13 @@ import { IEvolutions, IFlavorText, IPokemonData, PokeEncountersURL, PokeLocation
 export const GetPokemonData = async (pokemon: string | number) => {
     const promise = await fetch('https://pokeapi.co/api/v2/pokemon/' + pokemon);
     const data: IPokemonData = await promise.json();
+    const promise2 = await fetch('https://pokeapi.co/api/v2/pokemon/1');
+    const data2: IPokemonData = await promise2.json();
     console.log(data);
+    if(data.id > 650){
+        alert("ONLY FROM GEN 1 - 5 PLEASE");
+        return data2;
+    }
     return data;
 }
 

@@ -97,7 +97,7 @@ function PokePageComponent() {
     };
 
     const handleChange = (value: string | number) => {
-        if(value !== "" && Number(value) > 650){
+        if(value !== ""){
              setSearchName(value);
              setCurrPokemon(value);
         }
