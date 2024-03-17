@@ -3,8 +3,8 @@
 <!-- Pokemon API React Rebuild -->
 <!-- For this project I used react, typescript, tailwind, and flowbite to try my best to recreate my last pokeweb project. I couldn't get many things to work for example, local storage, my evolutions to render on initial load, and all the other minor functionalities that I have on my past website. But I was able to get majority of the website to look alike. I used lots of api chaining and hooks to access and display all of my info. -->
 
-<!-- Peer Reviewed By:  -->
-<!-- Peer Review: -->
+<!-- Peer Reviewed By: Zahid Afsar 9:58 AM 3-17-24  -->
+<!-- Peer Review: Your Pokemon project is off to a great start! You've got all the basic info for Gen One to Five Pokemon covered, however Chespin at number 650 is gen six, but the alert for gen 1 to 5 shows up at 651 so just make the "> 649" instead. But there are few improvements needed though. The evolution details only show up when a Pokemon is favorited, which might confuse some users. Also, the favorites feature resets when you switch to another Pokemon, which deletes the old one from the local storage somehow. And it's a bit odd that the favorite button stays filled when you move to a new Pokemon; you have to unfavorite and then favorite again. Plus, it seems like some Pokemon descriptions are showing up in different languages. On the bright side, your project handles shiny forms, names, IDs, locations, abilities, moves, and it's responsive too! With a bit more improvements, your project will be Finished. Keep up the good work! -->
 
 
 
