@@ -35,7 +35,7 @@ export const GetEvolutionArray = async (pokemon: string | number) => {
       }
     }
   }
-  evolArr.map((ev) => {
+  evolArr.map(async (ev) => {
     ev.map(async (p) => {
       imgArr.push(await GetEvolutionImg(p));
     });

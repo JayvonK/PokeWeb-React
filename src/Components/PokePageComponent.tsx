@@ -84,7 +84,9 @@ function PokePageComponent() {
     };
 
     const handleChange = (value: string | number) => {
-        setSearchName(value);
+        if (value !== "") {
+            setSearchName(value);
+        }
     };
 
     const handleKeyDown = (value: string) => {
@@ -102,26 +104,29 @@ function PokePageComponent() {
             setPokeFlavor(await GetFlavorText(value));
             setEvolutionData(await GetEvolutionData(value));
             setFavPokeImg(await GetEvolutionImg(value));
-            setEvolImgArray(await GetEvolutionArray(value))
-            
+            const evolArray = await GetEvolutionArray(value);
+            setEvolImgArray(evolArray);
         };
 
 
         InitPokeFetch(searchName);
         console.log(evolImgArray);
 
-    }, [searchName]);
+    }, [searchName, count]);
 
+    useEffect(() => {
+        setCount(count + 1);
+    }, [])
 
 
     return (
+
         <div className=" bg-pokeBlue">
             <Modal show={openModal} onClose={() => setOpenModal(false)}>
                 <Modal.Header className="md:text-5xl text-3xl chakra text-gra-900 dark:text-white flext items-center">
                     {" "}
                     Favorites
                 </Modal.Header>
-                {/* <img src={favIcon} alt="" className="md:w-14 w-8" /> */}
                 <Modal.Body className="p-4 md:p-5 grid grid-flow-row grid-cols-4">
                     <div className="p-4 md:p-5 grid grid-flow-row grid-cols-4">
                         {pokeFavs.map((ele, i) => (
@@ -277,83 +282,41 @@ function PokePageComponent() {
                                 Evolutions
                             </h1>
                             <div className="mb-8 2xl:h-[700px] 2xl:overflow-y-auto">
-                                    {
-                                        evolImgArray.map((pokemon, i) => {
-                                            console.log("running");
-                                            if (i % 2 === 0) {
-                                                return (
-                                                    <div key={i} className="flex justify-start items-center md:mb-8 mb-4">
-                                                        <button className="bg-black bg-opacity-50 hover:bg-opacity-25 md:w-28 md:h-28 w-20 h-20 rounded-[50px] flex justify-center items-center">
-                                                            <img
-                                                                className="md:w-20 w-12"
-                                                                src={evolImgArray[i]}
-                                                                alt=""
-                                                            />
-                                                        </button>
+                                {evolImgArray.length > 0 && (
+                                    evolImgArray.map((pokemon, i) => {
+                                        console.log("running");
+                                        if (i % 2 === 0) {
+                                            return (
+                                                <div key={i} className="flex justify-start items-center md:mb-8 mb-4">
+                                                    <button className="bg-black bg-opacity-50 hover:bg-opacity-25 md:w-28 md:h-28 w-20 h-20 rounded-[50px] flex justify-center items-center">
                                                         <img
-                                                            className="w-12 md:mx-10 mx-5"
-                                                            src={arrow}
+                                                            className="md:w-20 w-12"
+                                                            src={evolImgArray[i]}
                                                             alt=""
                                                         />
-                                                        <button className="bg-black bg-opacity-50 hover:bg-opacity-25 md:w-28 md:h-28 w-20 h-20 rounded-[50px] flex justify-center items-center">
-                                                            <img
-                                                                className="md:w-20 w-12"
-                                                                src={evolImgArray[i + 1]}
-                                                                alt=""
-                                                            />
-                                                        </button>
-                                                    </div>
-                                                )
-                                            }
-                                        })
-                                    }
+                                                    </button>
+                                                    <img
+                                                        className="w-12 md:mx-10 mx-5"
+                                                        src={arrow}
+                                                        alt=""
+                                                    />
+                                                    <button className="bg-black bg-opacity-50 hover:bg-opacity-25 md:w-28 md:h-28 w-20 h-20 rounded-[50px] flex justify-center items-center">
+                                                        <img
+                                                            className="md:w-20 w-12"
+                                                            src={evolImgArray[i + 1]}
+                                                            alt=""
+                                                        />
+                                                    </button>
+                                                </div>
+                                            );
+                                        }
+                                    })
+                                )}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            {/* <input
-        type="text"
-        onChange={(e) => handleChange(e.target.value)}
-        onKeyDown={(e) => handleKeyDown(e.key)}
-      />
-      <button type="button" onClick={handleCount}>
-        Search
-      </button>
-      <h1>ID: {pokeData && pokeData.id}</h1>
-      <h1>Name: {pokeData && pokeData.species.name}</h1>
-      <h1>Type: {pokeData && pokeData.types.map((t) => t.type.name + " ")}</h1>
-      <h1>Location: {pokeLocationData && pokeLocationData.names[0].name}</h1>
-      <h1>
-        Abilities:{" "}
-        {pokeData && pokeData.abilities.map((ab) => ab.ability.name + " | ")}
-      </h1>
-      <h1>
-        Moves: {pokeData && pokeData.moves.map((m) => m.move.name + " | ")}
-      </h1>
-      <h1>
-        {pokeFlavor?.flavor_text_entries[0].flavor_text}
-      </h1>
-      <h1>Evolutions:
-        {
-          evolutionArray
-        }
-      </h1>
-        fefefef
-      {evolutionData && GetEvolutionArray(evolutionData).map((pic, index) => (
-        <div>
-          <img key={index} src={pic} alt="" />
-        </div>
-      ))}
-      <img
-        src={
-          pokeData && pokeData.sprites.other["official-artwork"].front_default
-        }
-      />
-      <img
-        src={pokeData && pokeData.sprites.other["official-artwork"].front_shiny}
-      /> */}
         </div>
     );
 }
