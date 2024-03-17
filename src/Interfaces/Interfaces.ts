@@ -14,9 +14,16 @@ export type PokeEncountersURL = PokeEncountersObject[];
 
 export type PokeLocationData = PokeLocationObject;
 
+export interface IFlavorText {
+  evolution_chain: {
+    url: string;
+  };
+  flavor_text_entries: FlavorObject[];
+}
+
 type PokeLocationObject = {
   location: {
-    name: string
+    name: string;
   };
   names: NamesObject[];
 };
@@ -28,8 +35,12 @@ type NamesObject = {
   name: string;
 };
 
+type FlavorObject = {
+  flavor_text: string;
+};
+
 type PokeEncountersObject = {
-  'location_area': {
+  location_area: {
     url: string;
   };
 };

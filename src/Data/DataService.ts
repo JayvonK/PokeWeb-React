@@ -1,4 +1,4 @@
-import { IPokemonData, PokeEncountersURL, PokeLocationData,  } from "../Interfaces/Interfaces";
+import { IFlavorText, IPokemonData, PokeEncountersURL, PokeLocationData,  } from "../Interfaces/Interfaces";
 
 
 export const GetPokemonData = async (pokemon: string | number) => {
@@ -31,4 +31,12 @@ export const GetPokemonLocationData = async (id: string | number) => {
           };
           return NA_Location
     }
+}
+
+export const GetFlavorText = async (pokemon: string | number) => {  
+    const promise = await fetch('https://pokeapi.co/api/v2/pokemon/' + pokemon);
+    const data: IPokemonData = await promise.json();   
+    const promise2 = await fetch(data.species.url);
+    const data2: IFlavorText = await promise2.json();
+    return data2;
 }

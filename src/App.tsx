@@ -3,13 +3,14 @@ import React, { useEffect } from "react";
 import "./App.css";
 import { Modal } from "flowbite-react";
 import { useState } from "react";
-import { GetPokemonData, GetPokemonLocationData } from "./Data/DataService";
-import { IPokemonData, PokeLocationData } from "./Interfaces/Interfaces";
+import { GetFlavorText, GetPokemonData, GetPokemonLocationData } from "./Data/DataService";
+import { IFlavorText, IPokemonData, PokeLocationData } from "./Interfaces/Interfaces";
 
 function App() {
   const [count, setCount] = useState<number>(3);
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [pokeData, setPokeData] = useState<IPokemonData>();
+  const [pokeFlavor, setPokeFlavor] = useState<IFlavorText>();
   const [pokeLocationData, setPokeLocationData] = useState<PokeLocationData>();
   const [searchName, setSearchName] = useState<string | number>("1");
 
@@ -31,6 +32,7 @@ function App() {
     const InitPokeFetch = async (value: string | number) => {
       setPokeData(await GetPokemonData(value));
       setPokeLocationData(await GetPokemonLocationData(value));
+      setPokeFlavor(await GetFlavorText(value));
     };
     InitPokeFetch(searchName);
   }, [count]);
@@ -82,6 +84,9 @@ function App() {
       <h1>
         Moves: {pokeData && pokeData.moves.map((m) => m.move.name + " | ")}
       </h1>
+      <h1>
+        {pokeFlavor?.flavor_text_entries[0].flavor_text}
+      </h1>
       <img
         src={
           pokeData && pokeData.sprites.other["official-artwork"].front_default
@@ -90,9 +95,9 @@ function App() {
       <img
         src={pokeData && pokeData.sprites.other["official-artwork"].front_shiny}
       />
-      <img
+      {/* <img
         src={pokeData && pokeData.sprites.versions["generation-v"]["black-white"].animated.front_default}
-      />
+      /> */}
     </div>
   );
 }
