@@ -45,6 +45,15 @@ function PokePageComponent() {
     const [favPokeImg, setFavPokeImg] = useState<string>();
     const [pokeFavs, setPokeFavs] = useState<string[]>([]);
 
+    const getLocal = () => {
+        const storedData = localStorage.getItem("pokemonFavs");
+        return storedData ? JSON.parse(storedData) : [];
+    }
+
+    const saveLocal = (pokeFavs: string[]) => {
+        localStorage.setItem("pokemonFavs", JSON.stringify(pokeFavs))
+    }
+
     const handleCount = () => {
         setCount(count + 1);
         setCurrPokemon(searchName);
@@ -63,14 +72,17 @@ function PokePageComponent() {
             if (pokeData && pokeData.species.name != "") {
                 heartBool ? setPokeFavs(pokeFavs.filter((ele) => ele != pokeData.species.name)) : setPokeFavs([...pokeFavs, pokeData.species.name]);
             }
+            saveLocal(pokeFavs);
             setCount(count + 1);
         } else {
             if (pokeData && pokeData.species.name != "") {
                 heartBool ? setPokeFavs(pokeFavs.filter((ele) => ele != pokeData.species.name)) : setPokeFavs([...pokeFavs, pokeData.species.name]);
             }
+            saveLocal(pokeFavs);
             setSearchName(currPokemon);
             setCount(count + 1);
         }
+        
     };
 
     const handleShinyBoolChange = () => {
@@ -84,8 +96,9 @@ function PokePageComponent() {
     };
 
     const handleChange = (value: string | number) => {
-        if (value !== "") {
-            setSearchName(value);
+        if(value !== ""){
+             setSearchName(value);
+             setCurrPokemon(value);
         }
     };
 
@@ -95,7 +108,7 @@ function PokePageComponent() {
             setCurrPokemon(searchName);
         }
     };
-
+    
 
     useEffect(() => {
         const InitPokeFetch = async (value: string | number) => {
@@ -104,29 +117,24 @@ function PokePageComponent() {
             setPokeFlavor(await GetFlavorText(value));
             setEvolutionData(await GetEvolutionData(value));
             setFavPokeImg(await GetEvolutionImg(value));
-            const evolArray = await GetEvolutionArray(value);
-            setEvolImgArray(evolArray);
+            setEvolImgArray(await GetEvolutionArray(value))
+            setPokeFavs(getLocal());
         };
 
-
         InitPokeFetch(searchName);
-        console.log(evolImgArray);
 
-    }, [searchName, count]);
-
-    useEffect(() => {
-        setCount(count + 1);
-    }, [])
+    }, [searchName]);
 
 
     return (
-
+        
         <div className=" bg-pokeBlue">
             <Modal show={openModal} onClose={() => setOpenModal(false)}>
                 <Modal.Header className="md:text-5xl text-3xl chakra text-gra-900 dark:text-white flext items-center">
                     {" "}
                     Favorites
                 </Modal.Header>
+                {/* <img src={favIcon} alt="" className="md:w-14 w-8" /> */}
                 <Modal.Body className="p-4 md:p-5 grid grid-flow-row grid-cols-4">
                     <div className="p-4 md:p-5 grid grid-flow-row grid-cols-4">
                         {pokeFavs.map((ele, i) => (
@@ -282,36 +290,36 @@ function PokePageComponent() {
                                 Evolutions
                             </h1>
                             <div className="mb-8 2xl:h-[700px] 2xl:overflow-y-auto">
-                                {evolImgArray.length > 0 && (
-                                    evolImgArray.map((pokemon, i) => {
-                                        console.log("running");
-                                        if (i % 2 === 0) {
-                                            return (
-                                                <div key={i} className="flex justify-start items-center md:mb-8 mb-4">
-                                                    <button className="bg-black bg-opacity-50 hover:bg-opacity-25 md:w-28 md:h-28 w-20 h-20 rounded-[50px] flex justify-center items-center">
+                                    {
+                                        evolImgArray.map((pokemon, i) => {
+                                            console.log("running");
+                                            if (i % 2 === 0) {
+                                                return (
+                                                    <div key={i} className="flex justify-start items-center md:mb-8 mb-4">
+                                                        <button className="bg-black bg-opacity-50 hover:bg-opacity-25 md:w-28 md:h-28 w-20 h-20 rounded-[50px] flex justify-center items-center">
+                                                            <img
+                                                                className="md:w-20 w-12"
+                                                                src={evolImgArray[i]}
+                                                                alt=""
+                                                            />
+                                                        </button>
                                                         <img
-                                                            className="md:w-20 w-12"
-                                                            src={evolImgArray[i]}
+                                                            className="w-12 md:mx-10 mx-5"
+                                                            src={arrow}
                                                             alt=""
                                                         />
-                                                    </button>
-                                                    <img
-                                                        className="w-12 md:mx-10 mx-5"
-                                                        src={arrow}
-                                                        alt=""
-                                                    />
-                                                    <button className="bg-black bg-opacity-50 hover:bg-opacity-25 md:w-28 md:h-28 w-20 h-20 rounded-[50px] flex justify-center items-center">
-                                                        <img
-                                                            className="md:w-20 w-12"
-                                                            src={evolImgArray[i + 1]}
-                                                            alt=""
-                                                        />
-                                                    </button>
-                                                </div>
-                                            );
-                                        }
-                                    })
-                                )}
+                                                        <button className="bg-black bg-opacity-50 hover:bg-opacity-25 md:w-28 md:h-28 w-20 h-20 rounded-[50px] flex justify-center items-center">
+                                                            <img
+                                                                className="md:w-20 w-12"
+                                                                src={evolImgArray[i + 1]}
+                                                                alt=""
+                                                            />
+                                                        </button>
+                                                    </div>
+                                                )
+                                            }
+                                        })
+                                    }
                             </div>
                         </div>
                     </div>
