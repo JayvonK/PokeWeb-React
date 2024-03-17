@@ -1,11 +1,12 @@
-const idFormat = (num: string) => {
-    if(num.length === 1){
+const idFormat = (num: number) => {
+    const numm = num.toString();
+    if(numm.length === 1){
         return `#00${num}`;
     }
-    else if(num.length === 2){
+    else if(numm.length === 2){
         return `#0${num}`;
     }
-    else if(num.length === 3){
+    else if(numm.length === 3){
         return `#${num}`;
     }
 }

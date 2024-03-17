@@ -27,6 +27,7 @@ import random from "../Assets/icons8-random-100.png";
 import squirtle from "../Assets/squirtle.png";
 import arrow from "../Assets/ArrowRight.png"
 import shinySquirtle from "../Assets/shiny squirtle.png";
+import { idFormat, moveFormat, nameFormat } from "../Utils/HandleFormats";
 
 function PokePageComponent() {
     const [count, setCount] = useState<number>(0);
@@ -96,7 +97,7 @@ function PokePageComponent() {
     };
 
     const handleChange = (value: string | number) => {
-        if(value !== ""){
+        if(value !== "" && Number(value) > 650){
              setSearchName(value);
              setCurrPokemon(value);
         }
@@ -228,11 +229,11 @@ function PokePageComponent() {
                                 Click the pokemon!
                             </h1>
                             <h1 className="md:text-4xl text-[24px] chakraBold text-white mb-6 drop-shadow-lg">
-                                {pokeData && pokeData.id}
+                                {pokeData && idFormat(pokeData.id)}
                             </h1>
                             <h1 className="h-auto md:text-6xl text-[40px] chakraBold flex text-white items-center mb-6">
                                 <span className="drop-shadow-lg">
-                                    {pokeData && pokeData.species.name}
+                                    {pokeData && nameFormat(pokeData.species.name) }
                                 </span>{" "}
                                 <button
                                     type="button"
@@ -270,13 +271,26 @@ function PokePageComponent() {
                                 Abilities:{" "}
                                 <span className="chakra">
                                     {pokeData &&
-                                        pokeData.abilities.map((ab) => ab.ability.name + " | ")}
+                                        pokeData.abilities.map((ab, i) => {
+                                            if(i != pokeData.abilities.length - 1){
+                                                return (moveFormat(ab.ability.name) + ", ")
+                                            } else {
+                                                return moveFormat(ab.ability.name)
+                                            }
+                                        })}
                                 </span>
                             </h1>
                             <h1 className="md:text-4xl text-[24px] chakraBold text-white mb-10 drop-shadow-lg h-72 overflow-y-auto">
                                 Moves:{" "}
                                 <span className="chakra">
-                                    {pokeData && pokeData.moves.map((m) => m.move.name + " | ")}
+                                    {pokeData && pokeData.moves.map((m, i) => {
+                                        if(i != pokeData.moves.length - 1){
+                                            return (moveFormat(m.move.name) + ", ")
+                                        } else {
+                                            return moveFormat(m.move.name)
+                                        }
+                                        
+                                        })}
                                 </span>
                             </h1>
                         </div>
