@@ -50,3 +50,9 @@ export const GetEvolutionData = async (pokemon: string | number) => {
     const data3: IEvolutions = await promise3.json();
     return data3;
 }
+
+export const GetEvolutionImg = async (pokemon: string | number) => {
+    const promise = await fetch('https://pokeapi.co/api/v2/pokemon/' + pokemon);
+    const data: IPokemonData = await promise.json();
+    return data.sprites.versions["generation-v"]["black-white"].animated.front_default;
+}
