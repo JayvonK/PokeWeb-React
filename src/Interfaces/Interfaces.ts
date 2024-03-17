@@ -21,6 +21,17 @@ export interface IFlavorText {
   flavor_text_entries: FlavorObject[];
 }
 
+export interface IEvolutions {
+  chain: IEvolutionObject
+}
+
+interface IEvolutionObject {
+  evolves_to: IEvolutionObject[];
+  species: {
+    name: string;
+  }
+}
+
 type PokeLocationObject = {
   location: {
     name: string;

@@ -3,8 +3,9 @@ import React, { useEffect } from "react";
 import "./App.css";
 import { Modal } from "flowbite-react";
 import { useState } from "react";
-import { GetFlavorText, GetPokemonData, GetPokemonLocationData } from "./Data/DataService";
-import { IFlavorText, IPokemonData, PokeLocationData } from "./Interfaces/Interfaces";
+import { GetEvolutionData, GetFlavorText, GetPokemonData, GetPokemonLocationData } from "./Data/DataService";
+import { IEvolutions, IFlavorText, IPokemonData, PokeLocationData } from "./Interfaces/Interfaces";
+import { GetEvolutionArray } from "./Utils/HandleEvolutions";
 
 function App() {
   const [count, setCount] = useState<number>(3);
@@ -13,6 +14,7 @@ function App() {
   const [pokeFlavor, setPokeFlavor] = useState<IFlavorText>();
   const [pokeLocationData, setPokeLocationData] = useState<PokeLocationData>();
   const [searchName, setSearchName] = useState<string | number>("1");
+  const [evolutionData, setEvolutionData] = useState<IEvolutions>();
 
   const handleCount = () => {
     setCount(count + 1);
@@ -33,8 +35,10 @@ function App() {
       setPokeData(await GetPokemonData(value));
       setPokeLocationData(await GetPokemonLocationData(value));
       setPokeFlavor(await GetFlavorText(value));
+      setEvolutionData(await GetEvolutionData(value));
     };
     InitPokeFetch(searchName);
+    console.log(evolutionData&& GetEvolutionArray(evolutionData));
   }, [count]);
 
   return (
@@ -86,6 +90,15 @@ function App() {
       </h1>
       <h1>
         {pokeFlavor?.flavor_text_entries[0].flavor_text}
+      </h1>
+      <h1>Evolutions:
+        {
+        
+         evolutionData && GetEvolutionArray(evolutionData)?.map(evol => (
+            evol[0]
+          ))
+          
+        }
       </h1>
       <img
         src={
