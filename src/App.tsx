@@ -72,7 +72,7 @@ function App() {
     };
 
     const handleHeartBoolChange = () => {
-        heartBool ? setHeartBool(false) : setHeartBool(true);
+        heartBool ? setHeartBool(false) : setHeartBool(true); 
         if (currPokemon === searchName) {
             if (pokeData && pokeData.species.name != "") {
                 heartBool ? setPokeFavs(pokeFavs.filter((ele) => ele != pokeData.species.name)) : setPokeFavs([...pokeFavs, pokeData.species.name]);
