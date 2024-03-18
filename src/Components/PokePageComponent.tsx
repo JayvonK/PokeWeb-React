@@ -24,107 +24,106 @@ import heartFill from "../Assets/icons8-heart-64.png";
 import favIcon from "../Assets/icons8-heart-96 (1).png";
 import magnifyingGlass from "../Assets/icons8-magnifying-glass-128.png";
 import random from "../Assets/icons8-random-100.png";
-import squirtle from "../Assets/squirtle.png";
 import arrow from "../Assets/ArrowRight.png"
 import shinySquirtle from "../Assets/shiny squirtle.png";
 import { idFormat, moveFormat, nameFormat } from "../Utils/HandleFormats";
 
-function PokePageComponent() {
-    const [count, setCount] = useState<number>(0);
-    const [heartBool, setHeartBool] = useState<boolean>(false);
-    const [shinyPokeBool, setShinyPokeBool] = useState<boolean>(false);
-    const [heartSrc, setHeartSrc] = useState<string>(heartOutline);
+function PokePageComponent(props: {pokeData: IPokemonData, pokeLocationData: PokeLocationData, pokeFlavor: IFlavorText, evolutionData: IEvolutions, favPokeImg: string, evolImgArray: string[], pokeFavs: string[], handleKeyDown: (value: string) => void, handleChange: (value: string | number) => void, handleShinyBool: () => void, handleHeartBoolChange: () => void, handleRandomClick: () => void, handleCount: () => void, shinyPokeBool: boolean, handleShinyBoolChange: () => void, heartBool: boolean}) {
+    // const [count, setCount] = useState<number>(0);
+    // const [heartBool, setHeartBool] = useState<boolean>(false);
+    // const [shinyPokeBool, setShinyPokeBool] = useState<boolean>(false);
+    // const [heartSrc, setHeartSrc] = useState<string>(heartOutline);
     const [openModal, setOpenModal] = useState<boolean>(false);
-    const [pokeData, setPokeData] = useState<IPokemonData>();
-    const [pokeFlavor, setPokeFlavor] = useState<IFlavorText>();
-    const [pokeLocationData, setPokeLocationData] = useState<PokeLocationData>();
-    const [searchName, setSearchName] = useState<string | number>("7");
-    const [currPokemon, setCurrPokemon] = useState<string | number>("7");
-    const [evolutionData, setEvolutionData] = useState<IEvolutions>();
-    const [evolutionArray, setEvolutionArray] = useState<(string | number)[][]>();
-    const [evolImgArray, setEvolImgArray] = useState<string[]>([]);
-    const [favPokeImg, setFavPokeImg] = useState<string>();
-    const [pokeFavs, setPokeFavs] = useState<string[]>([]);
+    // const [pokeData, setPokeData] = useState<IPokemonData>();
+    // const [pokeFlavor, setPokeFlavor] = useState<IFlavorText>();
+    // const [pokeLocationData, setPokeLocationData] = useState<PokeLocationData>();
+    // const [searchName, setSearchName] = useState<string | number>("7");
+    // const [currPokemon, setCurrPokemon] = useState<string | number>("7");
+    // const [evolutionData, setEvolutionData] = useState<IEvolutions>();
+    // const [evolutionArray, setEvolutionArray] = useState<(string | number)[][]>();
+    // const [evolImgArray, setEvolImgArray] = useState<string[]>([]);
+    // const [favPokeImg, setFavPokeImg] = useState<string>();
+    // const [pokeFavs, setPokeFavs] = useState<string[]>([]);
 
-    const getLocal = () => {
-        const storedData = localStorage.getItem("pokemonFavs");
-        return storedData ? JSON.parse(storedData) : [];
-    }
+    // const getLocal = () => {
+    //     const storedData = localStorage.getItem("pokemonFavs");
+    //     return storedData ? JSON.parse(storedData) : [];
+    // }
 
-    const saveLocal = (pokeFavs: string[]) => {
-        localStorage.setItem("pokemonFavs", JSON.stringify(pokeFavs))
-    }
+    // const saveLocal = (pokeFavs: string[]) => {
+    //     localStorage.setItem("pokemonFavs", JSON.stringify(pokeFavs))
+    // }
 
-    const handleCount = () => {
-        setCount(count + 1);
-        setCurrPokemon(searchName);
-    };
+    // const handleCount = () => {
+    //     setCount(count + 1);
+    //     setCurrPokemon(searchName);
+    // };
 
-    const handleRandomClick = () => {
-        let num = Math.floor(Math.random() * 649) + 1;
-        setSearchName(num);
-        setCurrPokemon(num);
-        setCount(count + 1);
-    };
+    // const handleRandomClick = () => {
+    //     let num = Math.floor(Math.random() * 649) + 1;
+    //     setSearchName(num);
+    //     setCurrPokemon(num);
+    //     setCount(count + 1);
+    // };
 
-    const handleHeartBoolChange = () => {
-        heartBool ? setHeartBool(false) : setHeartBool(true);
-        if (currPokemon === searchName) {
-            if (pokeData && pokeData.species.name != "") {
-                heartBool ? setPokeFavs(pokeFavs.filter((ele) => ele != pokeData.species.name)) : setPokeFavs([...pokeFavs, pokeData.species.name]);
-            }
-            saveLocal(pokeFavs);
-            setCount(count + 1);
-        } else {
-            if (pokeData && pokeData.species.name != "") {
-                heartBool ? setPokeFavs(pokeFavs.filter((ele) => ele != pokeData.species.name)) : setPokeFavs([...pokeFavs, pokeData.species.name]);
-            }
-            saveLocal(pokeFavs);
-            setSearchName(currPokemon);
-            setCount(count + 1);
-        }
+    // const handleHeartBoolChange = () => {
+    //     heartBool ? setHeartBool(false) : setHeartBool(true);
+    //     if (currPokemon === searchName) {
+    //         if (pokeData && pokeData.species.name != "") {
+    //             heartBool ? setPokeFavs(pokeFavs.filter((ele) => ele != pokeData.species.name)) : setPokeFavs([...pokeFavs, pokeData.species.name]);
+    //         }
+    //         saveLocal(pokeFavs);
+    //         setCount(count + 1);
+    //     } else {
+    //         if (pokeData && pokeData.species.name != "") {
+    //             heartBool ? setPokeFavs(pokeFavs.filter((ele) => ele != pokeData.species.name)) : setPokeFavs([...pokeFavs, pokeData.species.name]);
+    //         }
+    //         saveLocal(pokeFavs);
+    //         setSearchName(currPokemon);
+    //         setCount(count + 1);
+    //     }
         
-    };
+    // };
 
-    const handleShinyBoolChange = () => {
-        shinyPokeBool ? setShinyPokeBool(false) : setShinyPokeBool(true);
-        if (currPokemon === searchName) {
-            setCount(count + 1);
-        } else {
-            setSearchName(currPokemon);
-            setCount(count + 1);
-        }
-    };
+    // const handleShinyBoolChange = () => {
+    //     shinyPokeBool ? setShinyPokeBool(false) : setShinyPokeBool(true);
+    //     if (currPokemon === searchName) {
+    //         setCount(count + 1);
+    //     } else {
+    //         setSearchName(currPokemon);
+    //         setCount(count + 1);
+    //     }
+    // };
 
-    const handleChange = (value: string | number) => {
-        if(value !== ""){
-             setSearchName(value);
-             setCurrPokemon(value);
-        }
-    };
+    // const handleChange = (value: string | number) => {
+    //     if(value !== ""){
+    //          setSearchName(value);
+    //          setCurrPokemon(value);
+    //     }
+    // };
 
-    const handleKeyDown = (value: string) => {
-        if (value === "Enter") {
-            setCount(count + 1);
-            setCurrPokemon(searchName);
-        }
-    };
+    // const handleKeyDown = (value: string) => {
+    //     if (value === "Enter") {
+    //         setCount(count + 1);
+    //         setCurrPokemon(searchName);
+    //     }
+    // };
     
 
-    useEffect(() => {
-        const InitPokeFetch = async (value: string | number) => {
-            setPokeData(await GetPokemonData(value));
-            setPokeLocationData(await GetPokemonLocationData(value));
-            setPokeFlavor(await GetFlavorText(value));
-            setEvolutionData(await GetEvolutionData(value));
-            setFavPokeImg(await GetEvolutionImg(value));
-            setEvolImgArray(await GetEvolutionArray(value))
-            setPokeFavs(getLocal());
-        };
+    // useEffect(() => {
+    //     const InitPokeFetch = async (value: string | number) => {
+    //         setPokeData(await GetPokemonData(value));
+    //         setPokeLocationData(await GetPokemonLocationData(value));
+    //         setPokeFlavor(await GetFlavorText(value));
+    //         setEvolutionData(await GetEvolutionData(value));
+    //         setFavPokeImg(await GetEvolutionImg(value));
+    //         setEvolImgArray(await GetEvolutionArray(value))
+    //         setPokeFavs(getLocal());
+    //     };
 
-        InitPokeFetch(searchName);
+    //     InitPokeFetch(searchName);
 
-    }, [searchName]);
+    // }, [searchName]);
 
 
     return (
@@ -138,11 +137,11 @@ function PokePageComponent() {
                 {/* <img src={favIcon} alt="" className="md:w-14 w-8" /> */}
                 <Modal.Body className="p-4 md:p-5 grid grid-flow-row grid-cols-4">
                     <div className="p-4 md:p-5 grid grid-flow-row grid-cols-4">
-                        {pokeFavs.map((ele, i) => (
+                        {props.pokeFavs.map((ele, i) => (
                             <img
                                 key={i}
                                 className="w-28 transition duration-300 ease-out hover:scale-110"
-                                src={favPokeImg}
+                                src={props.favPokeImg}
                                 alt=""
                             />
                         ))}
@@ -167,20 +166,20 @@ function PokePageComponent() {
                             type="text"
                             name=""
                             placeholder="Search for Pokemon"
-                            onChange={(e) => handleChange(e.target.value)}
-                            onKeyDown={(e) => handleKeyDown(e.key)}
+                            onChange={(e) => props.handleChange(e.target.value)}
+                            onKeyDown={(e) => props.handleKeyDown(e.key)}
                         />
                         <div className="flex md:justify-around justify-between md:w-full w-[250px] md:mt-0 mt-5">
                             <button
                                 type="button"
-                                onClick={handleCount}
+                                onClick={props.handleCount}
                                 className="bg-black bg-opacity-50 hover:bg-opacity-25 md:w-24 w-[56px] rounded-3xl"
                             >
                                 <img className="p-2" src={magnifyingGlass} alt="" />
                             </button>
                             <button className="bg-black bg-opacity-50 hover:bg-opacity-25 md:w-24 w-[56px] rounded-3xl">
                                 <img
-                                    onClick={handleRandomClick}
+                                    onClick={props.handleRandomClick}
                                     className="p-2"
                                     src={random}
                                     alt=""
@@ -204,12 +203,12 @@ function PokePageComponent() {
                             <img
                                 className="md:w-[550px] h-auto w-72 cursor-pointer transition duration-300 hover:scale-110"
                                 src={
-                                    shinyPokeBool
-                                        ? pokeData?.sprites.other["official-artwork"].front_shiny
-                                        : pokeData?.sprites.other["official-artwork"].front_default
+                                    props.shinyPokeBool
+                                        ? props.pokeData?.sprites.other["official-artwork"].front_shiny
+                                        : props.pokeData?.sprites.other["official-artwork"].front_default
                                 }
                                 alt=""
-                                onClick={handleShinyBoolChange}
+                                onClick={props.handleShinyBoolChange}
                             />
                             <img
                                 className="md:w-[550px] h-auto w-[330px] transition duration-300 hover:scale-110 hidden"
@@ -219,7 +218,7 @@ function PokePageComponent() {
                         </div>
                         <div className="pl-40 2xl:block hidden w-[80%]">
                             <h2 className="text-4xl chakra text-white drop-shadow-lg">
-                                {pokeFlavor?.flavor_text_entries[0].flavor_text}
+                                {props.pokeFlavor?.flavor_text_entries[0].flavor_text}
                             </h2>
                         </div>
                     </div>
@@ -229,33 +228,33 @@ function PokePageComponent() {
                                 Click the pokemon!
                             </h1>
                             <h1 className="md:text-4xl text-[24px] chakraBold text-white mb-6 drop-shadow-lg">
-                                {pokeData && idFormat(pokeData.id)}
+                                {props.pokeData && idFormat(props.pokeData.id)}
                             </h1>
                             <h1 className="h-auto md:text-6xl text-[40px] chakraBold flex text-white items-center mb-6">
                                 <span className="drop-shadow-lg">
-                                    {pokeData && nameFormat(pokeData.species.name) }
+                                    {props.pokeData && nameFormat(props.pokeData.species.name) }
                                 </span>{" "}
                                 <button
                                     type="button"
-                                    onClick={handleHeartBoolChange}
+                                    onClick={props.handleHeartBoolChange}
                                     className="ml-5 transition duration-300 hover:scale-105"
                                 >
                                     <img
                                         className="md:w-auto w-[40px]"
-                                        src={heartBool ? heartFill : heartOutline}
+                                        src={props.heartBool ? heartFill : heartOutline}
                                         alt="heart outline"
                                     />
                                 </button>
                             </h1>
                             <div className="mb-6 text-3xl text-white">
-                                {pokeData &&
-                                    pokeData.types.map((t, i) => (
+                                {props.pokeData &&
+                                    props.pokeData.types.map((t, i) => (
                                         <button
                                             key={i}
                                             className="bg-water rounded-[50px] drop-shadow-lg mr-3"
                                         >
                                             <p className="px-4 py-2 chakraBold md:text-3xl text-2xl">
-                                                {t.type.name}
+                                                {nameFormat(t.type.name)}
                                             </p>
                                         </button>
                                     ))}
@@ -263,16 +262,16 @@ function PokePageComponent() {
                             <h1 className="md:text-4xl text-[24px] chakraBold text-white mb-10 drop-shadow-lg">
                                 Location:{" "}
                                 <span className="chakra">
-                                    {(pokeLocationData && pokeLocationData.names[0].name) ||
-                                        (pokeLocationData && pokeLocationData.location.name)}
+                                    {(props.pokeLocationData && props.pokeLocationData.names[0].name) ||
+                                        (props.pokeLocationData && props.pokeLocationData.location.name)}
                                 </span>
                             </h1>
                             <h1 className="md:text-4xl text-[24px] chakraBold text-white mb-10 drop-shadow-lg">
                                 Abilities:{" "}
                                 <span className="chakra">
-                                    {pokeData &&
-                                        pokeData.abilities.map((ab, i) => {
-                                            if(i != pokeData.abilities.length - 1){
+                                    {props.pokeData &&
+                                        props.pokeData.abilities.map((ab, i) => {
+                                            if(i != props.pokeData.abilities.length - 1){
                                                 return (moveFormat(ab.ability.name) + ", ")
                                             } else {
                                                 return moveFormat(ab.ability.name)
@@ -283,8 +282,8 @@ function PokePageComponent() {
                             <h1 className="md:text-4xl text-[24px] chakraBold text-white mb-10 drop-shadow-lg h-72 overflow-y-auto">
                                 Moves:{" "}
                                 <span className="chakra">
-                                    {pokeData && pokeData.moves.map((m, i) => {
-                                        if(i != pokeData.moves.length - 1){
+                                    {props.pokeData && props.pokeData.moves.map((m, i) => {
+                                        if(i != props.pokeData.moves.length - 1){
                                             return (moveFormat(m.move.name) + ", ")
                                         } else {
                                             return moveFormat(m.move.name)
@@ -296,7 +295,7 @@ function PokePageComponent() {
                         </div>
                         <div className="2xl:hidden md:my-24 my-12">
                             <h2 className="md:text-4xl text-[24px] chakra text-white drop-shadow-lg">
-                                {pokeFlavor?.flavor_text_entries[0].flavor_text}
+                                {props.pokeFlavor?.flavor_text_entries[0].flavor_text}
                             </h2>
                         </div>
                         <div className="2xl:pl-8">
@@ -305,7 +304,7 @@ function PokePageComponent() {
                             </h1>
                             <div className="mb-8 2xl:h-[700px] 2xl:overflow-y-auto">
                                     {
-                                        evolImgArray.map((pokemon, i) => {
+                                        props.evolImgArray.map((pokemon, i) => {
                                             console.log("running");
                                             if (i % 2 === 0) {
                                                 return (
@@ -313,7 +312,7 @@ function PokePageComponent() {
                                                         <button className="bg-black bg-opacity-50 hover:bg-opacity-25 md:w-28 md:h-28 w-20 h-20 rounded-[50px] flex justify-center items-center">
                                                             <img
                                                                 className="md:w-20 w-12"
-                                                                src={evolImgArray[i]}
+                                                                src={props.evolImgArray[i]}
                                                                 alt=""
                                                             />
                                                         </button>
@@ -325,7 +324,7 @@ function PokePageComponent() {
                                                         <button className="bg-black bg-opacity-50 hover:bg-opacity-25 md:w-28 md:h-28 w-20 h-20 rounded-[50px] flex justify-center items-center">
                                                             <img
                                                                 className="md:w-20 w-12"
-                                                                src={evolImgArray[i + 1]}
+                                                                src={props.evolImgArray[i + 1]}
                                                                 alt=""
                                                             />
                                                         </button>
