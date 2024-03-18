@@ -198,3 +198,7 @@
           left:10%;
       }
 }
+
+.transition {
+  transition: 1s ease;
+}

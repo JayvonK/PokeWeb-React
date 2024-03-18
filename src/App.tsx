@@ -15,12 +15,14 @@ import {
     GetEvolutionData,
     GetEvolutionImg,
     GetFlavorText,
+    GetPokemonColor,
     GetPokemonData,
     GetPokemonLocationData,
 } from "./Data/DataService";
 import {
     IEvolutions,
     IFlavorText,
+    IPokeColor,
     IPokemonData,
     PokeLocationData,
 } from "./Interfaces/Interfaces";
@@ -45,7 +47,7 @@ function App() {
     const [evolImgArray, setEvolImgArray] = useState<string[]>(["src", "src"]);
     const [favPokeImg, setFavPokeImg] = useState<string>("");
     const [pokeFavs, setPokeFavs] = useState<string[]>([]);
-
+    const [pokeColor, setPokeColor] = useState<string>("");
 
 
     const getLocal = () => {
@@ -122,6 +124,7 @@ function App() {
             setFavPokeImg(await GetEvolutionImg(value));
             setEvolImgArray(await GetEvolutionArray(value))
             setPokeFavs(getLocal());
+            setPokeColor(await GetPokemonColor(value))
         };
 
         InitPokeFetch(searchName);
@@ -130,7 +133,7 @@ function App() {
 
     return (
         <>
-            <PokePageComponent pokeData={pokeData} pokeLocationData={pokeLocationData} pokeFlavor={pokeFlavor} evolutionData={evolutionData} favPokeImg={favPokeImg} evolImgArray={evolImgArray} pokeFavs={pokeFavs} handleKeyDown={handleKeyDown} handleChange={handleChange} handleShinyBool={handleShinyBoolChange} handleHeartBoolChange={handleHeartBoolChange} handleRandomClick={handleRandomClick} handleCount={handleCount} shinyPokeBool={shinyPokeBool} handleShinyBoolChange={handleShinyBoolChange} heartBool={heartBool} />
+            <PokePageComponent pokeData={pokeData} pokeLocationData={pokeLocationData} pokeFlavor={pokeFlavor} evolutionData={evolutionData} favPokeImg={favPokeImg} evolImgArray={evolImgArray} pokeFavs={pokeFavs} handleKeyDown={handleKeyDown} handleChange={handleChange} handleShinyBool={handleShinyBoolChange} handleHeartBoolChange={handleHeartBoolChange} handleRandomClick={handleRandomClick} handleCount={handleCount} shinyPokeBool={shinyPokeBool} handleShinyBoolChange={handleShinyBoolChange} heartBool={heartBool} pokeColor={pokeColor}/>
         </>
 
     );

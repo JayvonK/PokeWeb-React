@@ -25,6 +25,12 @@ export interface IEvolutions {
   chain: IEvolutionObject
 }
 
+export interface IPokeColor {
+  color: {
+    name: string
+  }
+}
+
 interface IEvolutionObject {
   evolves_to: IEvolutionObject[];
   species: {

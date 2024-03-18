@@ -27,8 +27,9 @@ import random from "../Assets/icons8-random-100.png";
 import arrow from "../Assets/ArrowRight.png"
 import shinySquirtle from "../Assets/shiny squirtle.png";
 import { idFormat, moveFormat, nameFormat } from "../Utils/HandleFormats";
+import { AddType, BodyColor } from "../Utils/HandleClassNames";
 
-function PokePageComponent(props: {pokeData: IPokemonData, pokeLocationData: PokeLocationData, pokeFlavor: IFlavorText, evolutionData: IEvolutions, favPokeImg: string, evolImgArray: string[], pokeFavs: string[], handleKeyDown: (value: string) => void, handleChange: (value: string | number) => void, handleShinyBool: () => void, handleHeartBoolChange: () => void, handleRandomClick: () => void, handleCount: () => void, shinyPokeBool: boolean, handleShinyBoolChange: () => void, heartBool: boolean}) {
+function PokePageComponent(props: {pokeData: IPokemonData, pokeLocationData: PokeLocationData, pokeFlavor: IFlavorText, evolutionData: IEvolutions, favPokeImg: string, evolImgArray: string[], pokeFavs: string[], handleKeyDown: (value: string) => void, handleChange: (value: string | number) => void, handleShinyBool: () => void, handleHeartBoolChange: () => void, handleRandomClick: () => void, handleCount: () => void, shinyPokeBool: boolean, handleShinyBoolChange: () => void, heartBool: boolean, pokeColor: string}) {
     // const [count, setCount] = useState<number>(0);
     // const [heartBool, setHeartBool] = useState<boolean>(false);
     // const [shinyPokeBool, setShinyPokeBool] = useState<boolean>(false);
@@ -128,7 +129,7 @@ function PokePageComponent(props: {pokeData: IPokemonData, pokeLocationData: Pok
 
     return (
         
-        <div className=" bg-pokeBlue">
+        <div className={BodyColor(props.pokeColor) + " transition"}>
             <Modal show={openModal} onClose={() => setOpenModal(false)}>
                 <Modal.Header className="md:text-5xl text-3xl chakra text-gra-900 dark:text-white flext items-center">
                     {" "}
@@ -251,7 +252,7 @@ function PokePageComponent(props: {pokeData: IPokemonData, pokeLocationData: Pok
                                     props.pokeData.types.map((t, i) => (
                                         <button
                                             key={i}
-                                            className="bg-water rounded-[50px] drop-shadow-lg mr-3"
+                                            className={AddType(t.type.name)}
                                         >
                                             <p className="px-4 py-2 chakraBold md:text-3xl text-2xl">
                                                 {nameFormat(t.type.name)}
