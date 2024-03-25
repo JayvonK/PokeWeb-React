@@ -11,6 +11,7 @@ import magnifyingGlass from "./Assets/icons8-magnifying-glass-128.png";
 import random from "./Assets/icons8-random-100.png";
 import arrow from "./Assets/ArrowRight.png"
 import shinySquirtle from "./Assets/shiny squirtle.png";
+
 import {
     GetEvolutionData,
     GetEvolutionImg,
@@ -49,7 +50,6 @@ function App() {
     const [pokeFavs, setPokeFavs] = useState<string[]>([]);
     const [pokeColor, setPokeColor] = useState<string>("");
 
-
     const getLocal = () => {
         const storedData = localStorage.getItem("pokemonFavs");
         return storedData ? JSON.parse(storedData) : [];
@@ -78,26 +78,17 @@ function App() {
                 heartBool ? setPokeFavs(pokeFavs.filter((ele) => ele != pokeData.species.name)) : setPokeFavs([...pokeFavs, pokeData.species.name]);
             }
             saveLocal(pokeFavs);
-            setCount(count + 1);
         } else {
             if (pokeData && pokeData.species.name != "") {
                 heartBool ? setPokeFavs(pokeFavs.filter((ele) => ele != pokeData.species.name)) : setPokeFavs([...pokeFavs, pokeData.species.name]);
             }
             saveLocal(pokeFavs);
             setSearchName(currPokemon);
-            setCount(count + 1);
         }
-
     };
 
     const handleShinyBoolChange = () => {
-        shinyPokeBool ? setShinyPokeBool(false) : setShinyPokeBool(true);
-        if (currPokemon === searchName) {
-            setCount(count + 1);
-        } else {
-            setSearchName(currPokemon);
-            setCount(count + 1);
-        }
+        setShinyPokeBool(!shinyPokeBool);
     };
 
     const handleChange = (value: string | number) => {
@@ -109,7 +100,6 @@ function App() {
 
     const handleKeyDown = (value: string) => {
         if (value === "Enter") {
-            setCount(count + 1);
             setCurrPokemon(searchName);
         }
     };
@@ -129,7 +119,7 @@ function App() {
 
         InitPokeFetch(searchName);
 
-    }, [searchName]);
+    }, [count]);
 
     return (
         <>

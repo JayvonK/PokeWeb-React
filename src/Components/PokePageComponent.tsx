@@ -29,13 +29,13 @@ import shinySquirtle from "../Assets/shiny squirtle.png";
 import { idFormat, moveFormat, nameFormat } from "../Utils/HandleFormats";
 import { AddType, BodyColor } from "../Utils/HandleClassNames";
 
-function PokePageComponent(props: {pokeData: IPokemonData, pokeLocationData: PokeLocationData, pokeFlavor: IFlavorText, evolutionData: IEvolutions, favPokeImg: string, evolImgArray: string[], pokeFavs: string[], handleKeyDown: (value: string) => void, handleChange: (value: string | number) => void, handleShinyBool: () => void, handleHeartBoolChange: () => void, handleRandomClick: () => void, handleCount: () => void, shinyPokeBool: boolean, handleShinyBoolChange: () => void, heartBool: boolean, pokeColor: string}) {
+function PokePageComponent(props: { pokeData: IPokemonData, pokeLocationData: PokeLocationData, pokeFlavor: IFlavorText, evolutionData: IEvolutions, favPokeImg: string, evolImgArray: string[], pokeFavs: string[], handleKeyDown: (value: string) => void, handleChange: (value: string | number) => void, handleShinyBool: () => void, handleHeartBoolChange: () => void, handleRandomClick: () => void, handleCount: () => void, shinyPokeBool: boolean, handleShinyBoolChange: () => void, heartBool: boolean, pokeColor: string }) {
 
 
-const [openModal, setOpenModal] = useState<boolean>(false);
+    const [openModal, setOpenModal] = useState<boolean>(false);
 
     return (
-        
+
         <div className={BodyColor(props.pokeColor) + " transition"}>
             <Modal show={openModal} onClose={() => setOpenModal(false)}>
                 <Modal.Header className="md:text-5xl text-3xl chakra text-gra-900 dark:text-white flext items-center">
@@ -109,18 +109,9 @@ const [openModal, setOpenModal] = useState<boolean>(false);
                         <div className="2xl:pl-40 2xl:flex 2xl:justify-start flex justify-center">
                             <img
                                 className="md:w-[550px] h-auto w-72 cursor-pointer transition duration-300 hover:scale-110"
-                                src={
-                                    props.shinyPokeBool
-                                        ? props.pokeData?.sprites.other["official-artwork"].front_shiny
-                                        : props.pokeData?.sprites.other["official-artwork"].front_default
-                                }
+                                src={ props.shinyPokeBool ? props.pokeData!.sprites.other["official-artwork"].front_shiny : props.pokeData!.sprites.other["official-artwork"].front_default }
                                 alt=""
                                 onClick={props.handleShinyBoolChange}
-                            />
-                            <img
-                                className="md:w-[550px] h-auto w-[330px] transition duration-300 hover:scale-110 hidden"
-                                src={shinySquirtle}
-                                alt=""
                             />
                         </div>
                         <div className="pl-40 2xl:block hidden w-[80%]">
@@ -139,7 +130,7 @@ const [openModal, setOpenModal] = useState<boolean>(false);
                             </h1>
                             <h1 className="h-auto md:text-6xl text-[40px] chakraBold flex text-white items-center mb-6">
                                 <span className="drop-shadow-lg">
-                                    {props.pokeData && nameFormat(props.pokeData.species.name) }
+                                    {props.pokeData && nameFormat(props.pokeData.species.name)}
                                 </span>{" "}
                                 <button
                                     type="button"
@@ -178,7 +169,7 @@ const [openModal, setOpenModal] = useState<boolean>(false);
                                 <span className="chakra">
                                     {props.pokeData &&
                                         props.pokeData.abilities.map((ab, i) => {
-                                            if(i != props.pokeData.abilities.length - 1){
+                                            if (i != props.pokeData.abilities.length - 1) {
                                                 return (moveFormat(ab.ability.name) + ", ")
                                             } else {
                                                 return moveFormat(ab.ability.name)
@@ -190,13 +181,13 @@ const [openModal, setOpenModal] = useState<boolean>(false);
                                 Moves:{" "}
                                 <span className="chakra">
                                     {props.pokeData && props.pokeData.moves.map((m, i) => {
-                                        if(i != props.pokeData.moves.length - 1){
+                                        if (i != props.pokeData.moves.length - 1) {
                                             return (moveFormat(m.move.name) + ", ")
                                         } else {
                                             return moveFormat(m.move.name)
                                         }
-                                        
-                                        })}
+
+                                    })}
                                 </span>
                             </h1>
                         </div>
@@ -210,36 +201,36 @@ const [openModal, setOpenModal] = useState<boolean>(false);
                                 Evolutions
                             </h1>
                             <div className="mb-8 2xl:h-[700px] 2xl:overflow-y-auto">
-                                    {
-                                        props.evolImgArray.map((pokemon, i) => {
-                                            console.log("running");
-                                            if (i % 2 === 0) {
-                                                return (
-                                                    <div key={i} className="flex justify-start items-center md:mb-8 mb-4">
-                                                        <button className="bg-black bg-opacity-50 hover:bg-opacity-25 md:w-28 md:h-28 w-20 h-20 rounded-[50px] flex justify-center items-center">
-                                                            <img
-                                                                className="md:w-20 w-12"
-                                                                src={props.evolImgArray[i]}
-                                                                alt=""
-                                                            />
-                                                        </button>
+                                {
+                                    props.evolImgArray!.map((pokemon, i) => {
+                                        console.log("running");
+                                        if (i % 2 === 0) {
+                                            return (
+                                                <div key={i} className="flex justify-start items-center md:mb-8 mb-4">
+                                                    <button className="bg-black bg-opacity-50 hover:bg-opacity-25 md:w-28 md:h-28 w-20 h-20 rounded-[50px] flex justify-center items-center">
                                                         <img
-                                                            className="w-12 md:mx-10 mx-5"
-                                                            src={arrow}
+                                                            className="md:w-20 w-12"
+                                                            src={props.evolImgArray[i]}
                                                             alt=""
                                                         />
-                                                        <button className="bg-black bg-opacity-50 hover:bg-opacity-25 md:w-28 md:h-28 w-20 h-20 rounded-[50px] flex justify-center items-center">
-                                                            <img
-                                                                className="md:w-20 w-12"
-                                                                src={props.evolImgArray[i + 1]}
-                                                                alt=""
-                                                            />
-                                                        </button>
-                                                    </div>
-                                                )
-                                            }
-                                        })
-                                    }
+                                                    </button>
+                                                    <img
+                                                        className="w-12 md:mx-10 mx-5"
+                                                        src={arrow}
+                                                        alt=""
+                                                    />
+                                                    <button className="bg-black bg-opacity-50 hover:bg-opacity-25 md:w-28 md:h-28 w-20 h-20 rounded-[50px] flex justify-center items-center">
+                                                        <img
+                                                            className="md:w-20 w-12"
+                                                            src={props.evolImgArray[i + 1]}
+                                                            alt=""
+                                                        />
+                                                    </button>
+                                                </div>
+                                            )
+                                        }
+                                    })
+                                }
                             </div>
                         </div>
                     </div>
