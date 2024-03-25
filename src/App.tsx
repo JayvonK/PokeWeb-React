@@ -44,8 +44,7 @@ function App() {
     const [searchName, setSearchName] = useState<string | number>("7");
     const [currPokemon, setCurrPokemon] = useState<string | number>("7");
     const [evolutionData, setEvolutionData] = useState<IEvolutions>(evolutionDataDefault);
-    const [evolutionArray, setEvolutionArray] = useState<(string | number)[][]>();
-    const [evolImgArray, setEvolImgArray] = useState<string[]>(["src", "src"]);
+    const [evolImgArray, setEvolImgArray] = useState<string[]>([]);
     const [favPokeImg, setFavPokeImg] = useState<string>("");
     const [pokeFavs, setPokeFavs] = useState<string[]>([]);
     const [pokeColor, setPokeColor] = useState<string>("");

@@ -130,7 +130,7 @@ function PokePageComponent(props: { pokeData: IPokemonData, pokeLocationData: Po
                             </h1>
                             <h1 className="h-auto md:text-6xl text-[40px] chakraBold flex text-white items-center mb-6">
                                 <span className="drop-shadow-lg">
-                                    {props.pokeData && nameFormat(props.pokeData.species.name)}
+                                    {props.pokeData! && nameFormat(props.pokeData.species.name)}
                                 </span>{" "}
                                 <button
                                     type="button"
@@ -203,7 +203,6 @@ function PokePageComponent(props: { pokeData: IPokemonData, pokeLocationData: Po
                             <div className="mb-8 2xl:h-[700px] 2xl:overflow-y-auto">
                                 {
                                     props.evolImgArray!.map((pokemon, i) => {
-                                        console.log("running");
                                         if (i % 2 === 0) {
                                             return (
                                                 <div key={i} className="flex justify-start items-center md:mb-8 mb-4">
