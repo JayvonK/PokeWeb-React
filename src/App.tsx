@@ -32,7 +32,7 @@ import { GetEvolutionArray } from "./Utils/HandleEvolutions";
 import { evolutionDataDefault, pokeDataDefault, pokeFlavorDefault, pokeLocationDataDefault } from "./Utils/Defaults";
 
 function App() {
-   
+
     const [count, setCount] = useState<number>(0);
     const [heartBool, setHeartBool] = useState<boolean>(false);
     const [shinyPokeBool, setShinyPokeBool] = useState<boolean>(false);
@@ -58,20 +58,23 @@ function App() {
         localStorage.setItem("pokemonFavs", JSON.stringify(pokeFavs))
     }
 
-    const handleCount = () => {
+    const handleCount = async () => {
         setCount(count + 1);
         setCurrPokemon(searchName);
+        setEvolImgArray(await GetEvolutionArray(searchName));
+        console.log(evolImgArray);
     };
 
-    const handleRandomClick = () => {
+    const handleRandomClick = async () => {
         let num = Math.floor(Math.random() * 649) + 1;
         setSearchName(num);
         setCurrPokemon(num);
-        setCount(count + 1);
+        setEvolImgArray(await GetEvolutionArray(num));
+        
     };
 
     const handleHeartBoolChange = () => {
-        heartBool ? setHeartBool(false) : setHeartBool(true); 
+        heartBool ? setHeartBool(false) : setHeartBool(true);
         if (currPokemon === searchName) {
             if (pokeData && pokeData.species.name != "") {
                 heartBool ? setPokeFavs(pokeFavs.filter((ele) => ele != pokeData.species.name)) : setPokeFavs([...pokeFavs, pokeData.species.name]);
@@ -88,12 +91,13 @@ function App() {
 
     const handleShinyBoolChange = () => {
         setShinyPokeBool(!shinyPokeBool);
+        console.log(evolImgArray);
     };
 
     const handleChange = (value: string | number) => {
         if (value !== "") {
             setSearchName(value);
-            setCurrPokemon(value);
+            // setCurrPokemon(value);
         }
     };
 
@@ -105,6 +109,7 @@ function App() {
 
 
     useEffect(() => {
+
         const InitPokeFetch = async (value: string | number) => {
             setPokeData(await GetPokemonData(value));
             setPokeLocationData(await GetPokemonLocationData(value));
@@ -117,12 +122,12 @@ function App() {
         };
 
         InitPokeFetch(searchName);
-
-    }, [count]);
+        
+    }, [currPokemon]);
 
     return (
         <>
-            <PokePageComponent pokeData={pokeData} pokeLocationData={pokeLocationData} pokeFlavor={pokeFlavor} evolutionData={evolutionData} favPokeImg={favPokeImg} evolImgArray={evolImgArray} pokeFavs={pokeFavs} handleKeyDown={handleKeyDown} handleChange={handleChange} handleShinyBool={handleShinyBoolChange} handleHeartBoolChange={handleHeartBoolChange} handleRandomClick={handleRandomClick} handleCount={handleCount} shinyPokeBool={shinyPokeBool} handleShinyBoolChange={handleShinyBoolChange} heartBool={heartBool} pokeColor={pokeColor}/>
+            <PokePageComponent pokeData={pokeData} pokeLocationData={pokeLocationData} pokeFlavor={pokeFlavor} evolutionData={evolutionData} favPokeImg={favPokeImg} evolImgArray={evolImgArray} pokeFavs={pokeFavs} handleKeyDown={handleKeyDown} handleChange={handleChange} handleShinyBool={handleShinyBoolChange} handleHeartBoolChange={handleHeartBoolChange} handleRandomClick={handleRandomClick} handleCount={handleCount} shinyPokeBool={shinyPokeBool} handleShinyBoolChange={handleShinyBoolChange} heartBool={heartBool} pokeColor={pokeColor} />
         </>
 
     );
