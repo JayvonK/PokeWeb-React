@@ -48,6 +48,7 @@ function App() {
     const [favPokeImg, setFavPokeImg] = useState<string>("");
     const [pokeFavs, setPokeFavs] = useState<string[]>([]);
     const [pokeColor, setPokeColor] = useState<string>("");
+    const [firstLoad, setFistLoad] = useState<boolean>(true);
 
     const getLocal = () => {
         const storedData = localStorage.getItem("pokemonFavs");
@@ -86,19 +87,23 @@ function App() {
         setShinyPokeBool(!shinyPokeBool);
     };
 
-    const handleChange = (value: string | number) => {
-        setSearchName(value)
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchName(e.target.value)
     };
 
-    const handleKeyDown = (value: string) => {
-        if (value === "Enter") {
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") {
             setCurrPokemon(searchName);
         }
     };
 
 
     useEffect(() => {
-        setPokeFavs(getLocal());
+        if(firstLoad){
+            setPokeFavs(getLocal());
+            setFistLoad(false);
+        }
+        
         try {
             const InitPokeFetch = async (value: string | number) => {
                 setPokeData(await GetPokemonData(value));
@@ -109,7 +114,6 @@ function App() {
                 setEvolImgArray(await GetEvolutionArray(value))
                 setPokeColor(await GetPokemonColor(value))
             };
-
             InitPokeFetch(searchName);
         } catch (error) {
             alert("Something went wrong")

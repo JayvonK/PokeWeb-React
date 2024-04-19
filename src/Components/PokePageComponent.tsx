@@ -29,14 +29,14 @@ import shinySquirtle from "../Assets/shiny squirtle.png";
 import { idFormat, moveFormat, nameFormat } from "../Utils/HandleFormats";
 import { AddType, BodyColor } from "../Utils/HandleClassNames";
 
-function PokePageComponent(props: { pokeData: IPokemonData, pokeLocationData: PokeLocationData, pokeFlavor: IFlavorText, evolutionData: IEvolutions, favPokeImg: string, evolImgArray: string[], pokeFavs: string[], handleKeyDown: (value: string) => void, handleChange: (value: string | number) => void, handleShinyBool: () => void, handleHeartBoolChange: () => void, handleRandomClick: () => void, handleCount: () => void, shinyPokeBool: boolean, handleShinyBoolChange: () => void, heartBool: boolean, pokeColor: string }) {
+function PokePageComponent(props: { pokeData: IPokemonData, pokeLocationData: PokeLocationData, pokeFlavor: IFlavorText, evolutionData: IEvolutions, favPokeImg: string, evolImgArray: string[], pokeFavs: string[], handleKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void, handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void, handleShinyBool: () => void, handleHeartBoolChange: () => void, handleRandomClick: () => void, handleCount: () => void, shinyPokeBool: boolean, handleShinyBoolChange: () => void, heartBool: boolean, pokeColor: string }) {
 
 
     const [openModal, setOpenModal] = useState<boolean>(false);
 
     return (
 
-        <div className={BodyColor(props.pokeColor) + " transition"}>
+        <div className={BodyColor(props.pokeColor) + " transition relative z-20"}>
             <Modal show={openModal} onClose={() => setOpenModal(false)}>
                 <Modal.Header className="md:text-5xl text-3xl chakra text-gra-900 dark:text-white flext items-center">
                     {" "}
@@ -56,11 +56,11 @@ function PokePageComponent(props: { pokeData: IPokemonData, pokeLocationData: Po
                 </Modal.Body>
             </Modal>
 
-            <img className="pokeBall opacity-5" src={pokeBall} alt="" />
+            <img className="pokeBall opacity-5 z-10" src={pokeBall} alt="" />
             <h1 className="md:block verticalWord text-white chakra text-3xl drop-shadow-lg hidden">
                 Click the pokemon!
             </h1>
-            <div className="grid grid-rows-1 2xl:px-40 lg:px-28 pl-10 md:pt-14">
+            <div className="grid grid-rows-1 2xl:px-40 lg:px-28 pl-10 md:pt-14 relative z-20">
                 <div className="grid 2xl:grid-cols-2 2xl:grid-rows-none grid-rows-2">
                     <div className="2xl:w-[650px] flex items-center">
                         <h1 className="md:text-[128px] md:w-[640px] text-6xl chakraBold text-white drop-shadow-lg">
@@ -73,8 +73,8 @@ function PokePageComponent(props: { pokeData: IPokemonData, pokeLocationData: Po
                             type="text"
                             name=""
                             placeholder="Search for Pokemon"
-                            onChange={(e) => props.handleChange(e.target.value)}
-                            onKeyDown={(e) => props.handleKeyDown(e.key)}
+                            onChange={(e) => props.handleChange(e)}
+                            onKeyDown={(e) => props.handleKeyDown(e)}
                         />
                         <div className="flex md:justify-around justify-between md:w-full w-[250px] md:mt-0 mt-5">
                             <button
@@ -93,7 +93,7 @@ function PokePageComponent(props: { pokeData: IPokemonData, pokeLocationData: Po
                                 />
                             </button>
                             <button
-                                className="bg-black bg-opacity-50 hover:bg-opacity-25 md:w-24 w-[56px] rounded-3xl"
+                                className="bg-black bg-opacity-50 hover:bg-opacity-25 md:w-24 w-[56px] rounded-3xl "
                                 onClick={() => setOpenModal(true)}
                             >
                                 <img className="p-2" src={favIcon} alt="" />
@@ -103,12 +103,12 @@ function PokePageComponent(props: { pokeData: IPokemonData, pokeLocationData: Po
                 </div>
             </div>
 
-            <div className="grid grid-rows-1 mt-12">
+            <div className="grid grid-rows-1 mt-12 relative">
                 <div className="2xl:grid 2xl:grid-cols-2">
                     <div>
                         <div className="2xl:pl-40 2xl:flex 2xl:justify-start flex justify-center">
                             <img
-                                className="md:w-[550px] h-auto w-72 cursor-pointer transition duration-300 hover:scale-110"
+                                className="md:w-[550px] h-auto w-72 cursor-pointer transition duration-300 hover:scale-110 relative z-20"
                                 src={ props.shinyPokeBool ? props.pokeData!.sprites.other["official-artwork"].front_shiny : props.pokeData!.sprites.other["official-artwork"].front_default }
                                 alt=""
                                 onClick={props.handleShinyBoolChange}
@@ -135,7 +135,7 @@ function PokePageComponent(props: { pokeData: IPokemonData, pokeLocationData: Po
                                 <button
                                     type="button"
                                     onClick={props.handleHeartBoolChange}
-                                    className="ml-5 transition duration-300 hover:scale-105"
+                                    className="ml-5 transition duration-300 hover:scale-105 relative z-20"
                                 >
                                     <img
                                         className="md:w-auto w-[40px]"
