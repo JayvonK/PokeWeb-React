@@ -51,11 +51,15 @@ function App() {
 
     const getLocal = () => {
         const storedData = localStorage.getItem("pokemonFavs");
-        return storedData ? JSON.parse(storedData) : [];
+        return storedData === null ? [] : JSON.parse(storedData);
     }
 
-    const saveLocal = (pokeFavs: string[]) => {
-        localStorage.setItem("pokemonFavs", JSON.stringify(pokeFavs))
+    const saveLocal = (pokemon: string | number) => {
+        let storage = getLocal()
+        if (!storage.includes(pokemon)) {
+            localStorage.setItem("pokemonFavs", JSON.stringify(pokeFavs))
+        }
+        setPokeFavs(getLocal());
     }
 
     const handleCount = async () => {
@@ -70,35 +74,20 @@ function App() {
         setSearchName(num);
         setCurrPokemon(num);
         setEvolImgArray(await GetEvolutionArray(num));
-        
+
     };
 
     const handleHeartBoolChange = () => {
         heartBool ? setHeartBool(false) : setHeartBool(true);
-        if (currPokemon === searchName) {
-            if (pokeData && pokeData.species.name != "") {
-                heartBool ? setPokeFavs(pokeFavs.filter((ele) => ele != pokeData.species.name)) : setPokeFavs([...pokeFavs, pokeData.species.name]);
-            }
-            saveLocal(pokeFavs);
-        } else {
-            if (pokeData && pokeData.species.name != "") {
-                heartBool ? setPokeFavs(pokeFavs.filter((ele) => ele != pokeData.species.name)) : setPokeFavs([...pokeFavs, pokeData.species.name]);
-            }
-            saveLocal(pokeFavs);
-            setSearchName(currPokemon);
-        }
+        saveLocal(currPokemon);
     };
 
     const handleShinyBoolChange = () => {
         setShinyPokeBool(!shinyPokeBool);
-        console.log(evolImgArray);
     };
 
     const handleChange = (value: string | number) => {
-        if (value !== "") {
-            setSearchName(value);
-            // setCurrPokemon(value);
-        }
+        setSearchName(value)
     };
 
     const handleKeyDown = (value: string) => {
@@ -109,20 +98,23 @@ function App() {
 
 
     useEffect(() => {
+        setPokeFavs(getLocal());
+        try {
+            const InitPokeFetch = async (value: string | number) => {
+                setPokeData(await GetPokemonData(value));
+                setPokeLocationData(await GetPokemonLocationData(value));
+                setPokeFlavor(await GetFlavorText(value));
+                setEvolutionData(await GetEvolutionData(value));
+                setFavPokeImg(await GetEvolutionImg(value));
+                setEvolImgArray(await GetEvolutionArray(value))
+                setPokeColor(await GetPokemonColor(value))
+            };
 
-        const InitPokeFetch = async (value: string | number) => {
-            setPokeData(await GetPokemonData(value));
-            setPokeLocationData(await GetPokemonLocationData(value));
-            setPokeFlavor(await GetFlavorText(value));
-            setEvolutionData(await GetEvolutionData(value));
-            setFavPokeImg(await GetEvolutionImg(value));
-            setEvolImgArray(await GetEvolutionArray(value))
-            setPokeFavs(getLocal());
-            setPokeColor(await GetPokemonColor(value))
-        };
+            InitPokeFetch(searchName);
+        } catch (error) {
+            alert("Something went wrong")
+        }
 
-        InitPokeFetch(searchName);
-        
     }, [currPokemon]);
 
     return (
