@@ -72,20 +72,20 @@ function App() {
     }
 
     const handleCount = async () => {
-        setCount(count + 1);
         setCurrPokemon(searchName);
+        console.log(evolImgArray);
     };
 
     const handleRandomClick = async () => {
         let num = Math.floor(Math.random() * 649) + 1;
         setSearchName(num);
         setCurrPokemon(num);
-        setEvolImgArray(await GetEvolutionArray(num));
+        InitPokeFetch(num);
     };
 
     const handleHeartBoolChange = () => {
         heartBool ? setHeartBool(false) : setHeartBool(true);
-        heartBool ? saveLocal(currPokemon) : deleteLocal(currPokemon);
+        !heartBool ? saveLocal(currPokemon) : deleteLocal(currPokemon);
     };
 
     const handleShinyBoolChange = () => {
@@ -111,6 +111,11 @@ function App() {
         setFavPokeImg(await GetEvolutionImg(value));
         setPokeColor(await GetPokemonColor(value));
         setPokeData(await GetPokemonData(value));
+        if (getLocal().includes(currPokemon)) {
+            setHeartBool(true);
+        } else {
+            setHeartBool(false);
+        }
     };
 
     useEffect(() => {
@@ -135,7 +140,7 @@ function App() {
 
     return (
         <>
-            <PokePageComponent pokeData={pokeData!} pokeLocationData={pokeLocationData} pokeFlavor={pokeFlavor} evolutionData={evolutionData!} favPokeImg={favPokeImg} evolImgArray={evolImgArray} pokeFavs={pokeFavs} handleKeyDown={handleKeyDown} handleChange={handleChange} handleShinyBool={handleShinyBoolChange} handleHeartBoolChange={handleHeartBoolChange} handleRandomClick={handleRandomClick} handleCount={handleCount} shinyPokeBool={shinyPokeBool} handleShinyBoolChange={handleShinyBoolChange} heartBool={heartBool} pokeColor={pokeColor} />
+            <PokePageComponent pokeData={pokeData!} pokeLocationData={pokeLocationData!} pokeFlavor={pokeFlavor} evolutionData={evolutionData!} favPokeImg={favPokeImg!} evolImgArray={evolImgArray!} pokeFavs={pokeFavs} handleKeyDown={handleKeyDown} handleChange={handleChange} handleShinyBool={handleShinyBoolChange} handleHeartBoolChange={handleHeartBoolChange} handleRandomClick={handleRandomClick} handleCount={handleCount} shinyPokeBool={shinyPokeBool} handleShinyBoolChange={handleShinyBoolChange} heartBool={heartBool} pokeColor={pokeColor} />
         </>
     );
 }

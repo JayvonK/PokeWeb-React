@@ -40,5 +40,6 @@ export const GetEvolutionArray = async (pokemon: string | number) => {
       imgArr.push(await GetEvolutionImg(p));
     });
   });
+  console.log(imgArr);
   return imgArr;
 };

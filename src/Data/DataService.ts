@@ -6,7 +6,6 @@ export const GetPokemonData = async (pokemon: string | number) => {
     const data: IPokemonData = await promise.json();
     const promise2 = await fetch('https://pokeapi.co/api/v2/pokemon/1');
     const data2: IPokemonData = await promise2.json();
-    console.log(data);
     if(data.id > 650){
         alert("ONLY FROM GEN 1 - 5 PLEASE");
         return data2;
@@ -62,6 +61,7 @@ export const GetEvolutionData = async (pokemon: string | number) => {
     const data2: IFlavorText = await promise2.json();
     const promise3 = await fetch(data2.evolution_chain.url);
     const data3: IEvolutions = await promise3.json();
+    console.log(data3);
     return data3;
 }
 
